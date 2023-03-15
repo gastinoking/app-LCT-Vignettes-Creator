@@ -13,7 +13,6 @@
                             @include('flash')
                             <div class="d-flex justify-content-between">
                                 <h4 class="card-title">Ajouter une vignette</h4>
-                                <a href="{{route('administration.print-all')}}" class="btn btn-danger"> Imprimer    <i class=" fa fa-print"></i></a>
                             </div>
 
                             <div class="row">
@@ -23,13 +22,13 @@
                                     <div class="mb-3 row">
                                         {{Form::label('entreprise','Nom de l\'entreprise ',['class'=>'col-md-4 col-form-label'])}}
                                         <div class="col-md-8">
-                                            {{Form::text('entreprise',$vignette->entreprise,['placeholder'=>'LCT', "class"=>"form-control"])}}
+                                            {{Form::text('entreprise',$vignette->entreprise,['placeholder'=>'LCT', "class"=>'form-control '])}}
+                                            @if($errors->has('entreprise'))
+                                               <span class="text-danger"> {{ $errors->first('entreprise')}}</span>
+                                            @endif
                                         </div>
-                                        @error('entreprise')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
+
+
                                     </div>
 
                                     <div class="mb-3 row">
@@ -49,20 +48,26 @@
                                     <div class="mb-3 row">
                                         {{Form::label('annees','Nom de l\'annees ',['class'=>'col-md-4 col-form-label'])}}
                                         <div class="col-md-8">
-                                            {{Form::text('annees',$vignette->annees,['placeholder'=>'2022', "class"=>"form-control"])}}
+                                            {{Form::select('annees',$annees,  $vignette->annees,['placeholder'=>'Sélectionner une année', "class"=>"form-control"])}}
                                         </div>
                                     </div>
 
                                     <div class="mb-3 row">
                                         {{Form::label('typeimpression',"Selectionner la vignette",['class'=>'col-md-4 col-form-label'])}}
                                         <div class="col-md-8">
-                                            {{Form::select('typeimpression',$typeimpression,$vignette->typeimpression,['placeholder'=>'Rouge', "class"=>"form-control"])}}
+                                            {{Form::select('typeimpression',$typeimpression,$vignette->typeimpression,['placeholder'=>'Sélectionner la vignette', "class"=>"form-control"])}}
                                         </div>
                                     </div>
 
-                                    <button type="submit" class="btn btn-secondary">Ajouter  la vignette<i class="fa fat-save"></i></button>
+                                    <button type="submit" class="btn btn-primary">Ajouter  la vignette<i class="fa fat-save"></i></button>
                                     {!! Form::close() !!}
 
+                                </div>
+                                <div class="col-lg-2"></div>
+                                <div class="col-lg-4">
+                                    @if($vignette->img)
+                                        <img src="{{$vignette->img}}" alt="" style="width: 60%">
+                                    @endif
                                 </div>
                             </div>
 

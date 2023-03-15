@@ -12,38 +12,64 @@ class VignetteContoller extends Controller
 
     public function dashboard()
     {
-
-        return view('administration.dashboard') ;
+        $total = Vignette::count() ;
+        $vignettes = Vignette::orderBy('id','DESC')->paginate() ;
+        return view('administration.dashboard',compact('vignettes','total')) ;
     }
 
     public function print($id)
     {
         $vignettes = Vignette::where(['id'=> $id])->get();
+        $vignettes[0]->etat = 1;
+        $vignettes[0]->save() ;
         $dompdf = new Dompdf();
         $dompdf->setPaper('340px', 'auto');
 
-        $customPaper = array(0,0,340.118110236,340.118110236);
+        $customPaper = array(0, 0,   ((9*90)/3)-15 ,  ((9*90)/3)-15);
 //        '340px', '340px'
         return \PDF::loadView('administration.vignettes.print',compact('vignettes')) ->setPaper($customPaper, 'landscape' )->stream("vignettes.pdf");
     }
 
     public function printAll()
     {
-        $vignettes = Vignette::get()->take(13) ;
-        $dompdf = new Dompdf();
-        $dompdf->setPaper('340px', 'auto');
 
-        $customPaper = array(0,0,340.118110236,340.118110236);
-//        '340px', '340px'
-        return \PDF::loadView('administration.vignettes.print',compact('vignettes')) ->setPaper($customPaper, 'landscape' )->stream("vignettes.pdf");
+        $type = \request()->type ;
+        $cond = '' ;
+        if($type && $type=='rouge'){
+            $cond = 'images/vignettes/vignette-rouge.png' ;
+        }elseif($type && $type=='bleu'){
+             $cond = 'images/vignettes/vignette-bleu.png' ;
+       }elseif($type && $type=='jeune'){
+            $cond = 'images/vignettes/vignette-jeune.png' ;
+        }elseif($type && $type=='verte'){
+            $cond = 'images/vignettes/vignette-vert.png' ;
+        }else{
+            $cond = '' ;
+        }
+
+
+        $vignettes = Vignette::where(['typeimpression'=>$cond])->where('typeimpression','<>','')->get() ;
+//        $vignettes->update(['etat'=>1]);
+        $customPaper = array(0, 0,   ((9*90)/3)-15 ,  ((9*90)/3)-15);
+        return \PDF::loadView('administration.vignettes.print',compact('vignettes')) ->setPaper($customPaper, 'portrait' )->stream("vignettes.pdf");
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $vignettes = Vignette::orderBy('id','DESC')->paginate() ;
-        return view('administration.vignettes.index',compact('vignettes')) ;
+        $vignettesrouge = Vignette::where(['typeimpression'=>'images/vignettes/vignette-rouge.png','etat'=>0])->orderBy('id','DESC')->get() ;
+        $vignettesbleu= Vignette::where(['typeimpression'=>'images/vignettes/vignette-bleu.png','etat'=>0])->orderBy('id','DESC')->get() ;
+        $vignettesjaunes= Vignette::where(['typeimpression'=>'images/vignettes/vignette-jeune.png','etat'=>0])->orderBy('id','DESC')->get() ;
+        $vignettesvertes= Vignette::where(['typeimpression'=>'images/vignettes/vignette-vert.png','etat'=>0])->orderBy('id','DESC')->get() ;
+        $vignettesdejaimprime= Vignette::where('etat','=',1)->orderBy('id','DESC')->get() ;
+        return view('administration.vignettes.index',compact(
+            'vignettesrouge',
+            'vignettesbleu',
+                    'vignettesjaunes',
+                    'vignettesvertes',
+                    'vignettesdejaimprime',
+        )) ;
     }
 
     /**
@@ -51,10 +77,20 @@ class VignetteContoller extends Controller
      */
     public function create()
     {
-        $data = ['entreprise'=>'', 'immatriculation'=>'','typeengin'=>'', 'annees'=>'', 'typeimpression'=>''] ;
+        $data = ['entreprise'=>'LCT', 'immatriculation'=>'TG-','typeengin'=>'', 'annees'=>'', 'typeimpression'=>''] ;
+        $annees = array();
+        for ($i = 2022; $i <= 2030; $i++) {
+            $annees[$i] = $i;
+        }
         $vignette =    Vignette::firstOrCreate($data);
         $typeimpression = Vignette::$typesVignettes;
-        return view('administration.vignettes.edit',compact('vignette','typeimpression'));
+        return view('administration.vignettes.edit',compact('vignette','typeimpression','annees'));
+    }
+
+    public function vignettesImporte()
+    {
+
+        return view('administration.vignettes.vignettesImporte');
     }
 
     /**
@@ -78,9 +114,12 @@ class VignetteContoller extends Controller
      */
     public function edit(Vignette $vignette)
     {
-
+        $annees = array();
+        for ($i = 2022; $i <= 2030; $i++) {
+            $annees[$i] = $i;
+        }
         $typeimpression = Vignette::$typesVignettes;
-        return view('administration.vignettes.edit',compact('vignette','typeimpression'));
+        return view('administration.vignettes.edit',compact('vignette','typeimpression','annees'));
     }
 
     /**

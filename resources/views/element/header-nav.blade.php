@@ -3,7 +3,7 @@
         <div class="float-start">
             <!-- LOGO -->
             <div class="navbar-brand-box">
-                <a href="#" class="logo logo-dark">
+                <a href="{{route('administration.dashboard')}}" class="logo logo-dark">
 						<span class="logo-sm">
 							<img src="{{asset('administration/assets/images/logo-sm.png')}}" alt="" height="22">
 						</span>
@@ -12,7 +12,7 @@
 						</span>
                 </a>
 
-                <a href="#" class="logo logo-light">
+                <a href="{{route('administration.dashboard')}}" class="logo logo-light">
 						<span class="logo-sm">
 							<img src="{{asset('administration/assets/images/logo-sm.png')}}" alt="" height="22">
 						</span>
@@ -237,9 +237,13 @@
                                 class="mdi mdi-lock-open-outline font-size-17 text-muted align-middle me-1"></i>
                         Lock screen</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-danger" href="#"><i
-                                class="mdi mdi-power font-size-17 text-muted align-middle me-1 text-danger"></i>
-                        Logout</a>
+                    <a class="dropdown-item text-danger" href="{{ route('login') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
+                        <i class="mdi mdi-power font-size-17 text-muted align-middle me-1 text-danger"></i>
+                        Déconnexion
+                    </a>
+                    <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
                 </div>
             </div>
 

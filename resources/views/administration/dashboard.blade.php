@@ -7,62 +7,26 @@
         <div class="container-fluid">
 
             <div class="row">
-                <div class="col-xl-3 col-sm-6">
-                    <div class="card mini-stat bg-primary">
-                        <div class="card-body mini-stat-img">
-                            <div class="mini-stat-icon">
-                                <i class="mdi mdi-cube-outline float-end"></i>
-                            </div>
-                            <div class="text-white">
-                                <h6 class="text-uppercase mb-3 font-size-16 text-white">Orders</h6>
-                                <h2 class="mb-4 text-white">1,587</h2>
-                                <span class="badge bg-info"> +11% </span> <span class="ms-2">From previous period</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6">
-                    <div class="card mini-stat bg-primary">
-                        <div class="card-body mini-stat-img">
-                            <div class="mini-stat-icon">
-                                <i class="mdi mdi-buffer float-end"></i>
-                            </div>
-                            <div class="text-white">
-                                <h6 class="text-uppercase mb-3 font-size-16 text-white">Revenue</h6>
-                                <h2 class="mb-4 text-white">$46,782</h2>
-                                <span class="badge bg-danger"> -29% </span> <span class="ms-2">From previous period</span>
+
+                @foreach(range(0,3) as $k=>$v)
+
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="card mini-stat bg-primary">
+                            <div class="card-body mini-stat-img">
+                                <div class="mini-stat-icon">
+                                    <i class="mdi mdi-cube-outline float-end"></i>
+                                </div>
+                                <div class="text-white">
+                                    <h6 class="text-uppercase mb-3 font-size-16 text-white">Vignettes</h6>
+                                    <h2 class="mb-4 text-white">{{$total}}</h2>
+                                    <span class="badge bg-info">  0 </span> <span class="ms-2">...</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-sm-6">
-                    <div class="card mini-stat bg-primary">
-                        <div class="card-body mini-stat-img">
-                            <div class="mini-stat-icon">
-                                <i class="mdi mdi-tag-text-outline float-end"></i>
-                            </div>
-                            <div class="text-white">
-                                <h6 class="text-uppercase mb-3 font-size-16 text-white">Average Price</h6>
-                                <h2 class="mb-4 text-white">$15.9</h2>
-                                <span class="badge bg-warning"> 0% </span> <span class="ms-2">From previous period</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6">
-                    <div class="card mini-stat bg-primary">
-                        <div class="card-body mini-stat-img">
-                            <div class="mini-stat-icon">
-                                <i class="mdi mdi-briefcase-check float-end"></i>
-                            </div>
-                            <div class="text-white">
-                                <h6 class="text-uppercase mb-3 font-size-16 text-white">Product Sold</h6>
-                                <h2 class="mb-4 text-white">1890</h2>
-                                <span class="badge bg-info"> +89% </span> <span class="ms-2">From previous period</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+
+
             </div>
             <!-- end row -->
 
@@ -78,124 +42,76 @@
                 <div class="col-xl-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title mb-4">Latest Orders</h4>
+                            <h4 class="card-title mb-4">Liste des vignetttes</h4>
 
                             <div class="table-responsive">
-                                <table class="table align-middle table-centered table-vertical table-nowrap mb-1">
+                                <table id="datatable" class="table table-bordered dt-responsive nowrap"
+                                       style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                    <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Vignettes</th>
+                                        <th>Entreprise</th>
+                                        <th>Immatriculation</th>
+                                        <th>Engin</th>
+                                        <th>Année</th>
+                                        <th>Type de vignettes</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
 
                                     <tbody>
-                                    <tr>
-                                        <td>#12354781</td>
-                                        <td>
-                                            <img src="{{asset('administration/assets/images/users/user-1.jpg')}}" alt="user-image"
-                                                 class="avatar-xs me-2 rounded-circle" /> Riverston Glass Chair
-                                        </td>
-                                        <td><span class="badge rounded-pill bg-success">Delivered</span></td>
-                                        <td>
-                                            $185
-                                        </td>
-                                        <td>
-                                            5/12/2016
-                                        </td>
-                                        <td>
-                                            <button type="button"
-                                                    class="btn btn-secondary btn-sm waves-effect waves-light">Edit</button>
-                                        </td>
-                                    </tr>
+                                    @foreach($vignettes as $k=>$v)
+                                        <tr>
+                                            <td>{{$v->id}}</td>
+                                            <td><img src="{{$v->img}}" alt="{{$v->entreprise}}" style="height: 100px;"></td>
+                                            <td>{{$v->entreprise}}</td>
+                                            <td>{{$v->immatriculation}}</td>
+                                            <td>{{$v->typeengin}}</td>
+                                            <td>{{$v->annees}}</td>
+                                            <td>
+                                                @php
 
-                                    <tr>
-                                        <td>#52140300</td>
-                                        <td>
-                                            <img src="{{asset('administration/assets/images/users/user-2.jpg')}}" alt="user-image"
-                                                 class="avatar-xs me-2 rounded-circle" /> Shine Company Catalina
-                                        </td>
-                                        <td><span class="badge rounded-pill bg-success">Delivered</span></td>
-                                        <td>
-                                            $1,024
-                                        </td>
-                                        <td>
-                                            5/12/2016
-                                        </td>
-                                        <td>
-                                            <button type="button"
-                                                    class="btn btn-secondary btn-sm waves-effect waves-light">Edit</button>
-                                        </td>
-                                    </tr>
+                                                    $type = "";
+                                                    $c = "";
+                                                    switch ($v->typeimpression):
+                                                        case 'images/vignettes/vignette-vert.png';
+                                                            $type = 'vert';
+                                                            $c = 'bg-success';
+                                                            break;
+                                                        case 'images/vignettes/vignette-jeune.png';
+                                                            $type = 'jaune';
+                                                             $c = 'bg-warning';
+                                                            break;
 
-                                    <tr>
-                                        <td>#96254137</td>
-                                        <td>
-                                            <img src="{{asset('administration/assets/images/users/user-3.jpg')}}" alt="user-image"
-                                                 class="avatar-xs me-2 rounded-circle" /> Trex Outdoor Furniture Cape
-                                        </td>
-                                        <td><span class="badge rounded-pill bg-danger">Cancel</span></td>
-                                        <td>
-                                            $657
-                                        </td>
-                                        <td>
-                                            5/12/2016
-                                        </td>
-                                        <td>
-                                            <button type="button"
-                                                    class="btn btn-secondary btn-sm waves-effect waves-light">Edit</button>
-                                        </td>
-                                    </tr>
+                                                         case 'images/vignettes/vignette-bleu.png';
+                                                            $type = 'bleu';
+                                                             $c = 'bg-primary';
+                                                            break;
+                                                         case 'images/vignettes/vignette-rouge.png';
+                                                            $type = 'rouge';
+                                                             $c = 'bg-danger';
+                                                            break;
 
-                                    <tr>
-                                        <td>#12365474</td>
-                                        <td>
-                                            <img src="{{asset('administration/assets/images/users/user-4.jpg')}}" alt="user-image"
-                                                 class="avatar-xs me-2 rounded-circle" /> Oasis Bathroom Teak Corner
-                                        </td>
-                                        <td><span class="badge rounded-pill bg-warning">Shipped</span></td>
-                                        <td>
-                                            $8451
-                                        </td>
-                                        <td>
-                                            5/12/2016
-                                        </td>
-                                        <td>
-                                            <button type="button"
-                                                    class="btn btn-secondary btn-sm waves-effect waves-light">Edit</button>
-                                        </td>
-                                    </tr>
+                                                    endswitch;
+                                                @endphp
 
-                                    <tr>
-                                        <td>#85214796</td>
-                                        <td>
-                                            <img src="{{asset('administration/assets/images/users/user-5.jpg')}}" alt="user-image"
-                                                 class="avatar-xs me-2 rounded-circle" /> BeoPlay Speaker
-                                        </td>
-                                        <td><span class="badge rounded-pill bg-success">Delivered</span></td>
-                                        <td>
-                                            $584
-                                        </td>
-                                        <td>
-                                            5/12/2016
-                                        </td>
-                                        <td>
-                                            <button type="button"
-                                                    class="btn btn-secondary btn-sm waves-effect waves-light">Edit</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>#12354781</td>
-                                        <td>
-                                            <img src="{{asset('administration/assets/images/users/user-6.jpg')}}" alt="user-image"
-                                                 class="avatar-xs me-2 rounded-circle" /> Riverston Glass Chair
-                                        </td>
-                                        <td><span class="badge rounded-pill bg-success">Delivered</span></td>
-                                        <td>
-                                            $185
-                                        </td>
-                                        <td>
-                                            5/12/2016
-                                        </td>
-                                        <td>
-                                            <button type="button"
-                                                    class="btn btn-secondary btn-sm waves-effect waves-light">Edit</button>
-                                        </td>
-                                    </tr>
+                                                <span class="badge {{$c}}"> {{$type }}</span>
+                                            </td>
+                                            <td>
+                                                <a href="{{route('administration.vignettes.edit',$v->id)}}" class="btn btn-sm btn-success">
+                                                    <i class=" fa fa-pen"></i>
+                                                </a>
+
+                                                <a href="{{route('administration.vignettes.edit',$v->id)}}" class="btn btn-sm btn-danger">
+                                                    <i class=" fa fa-trash"></i>
+                                                </a>
+                                                <a href="{{route('administration.print',$v->id)}}" class="btn btn-sm btn-primary">
+                                                    <i class=" fa fa-print"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
 
                                     </tbody>
                                 </table>

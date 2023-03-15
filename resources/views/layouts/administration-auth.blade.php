@@ -42,14 +42,14 @@
 
                     </div>
                 </div>
-                <div class="mt-5 text-center">
-                    <p>Don't have an account ? <a href="pages-register.html" class="text-primary"> Signup Now </a>
-                    </p>
-                    ©
-                    <script>document.write(new Date().getFullYear())</script> Lexa <span
-                            class="d-none d-sm-inline-block"> - Crafted with <i class="mdi mdi-heart text-danger"></i>
-                            by Themesdesign.</span>
-                </div>
+{{--                <div class="mt-5 text-center">--}}
+{{--                    <p>Don't have an account ? <a href="pages-register.html" class="text-primary"> Signup Now </a>--}}
+{{--                    </p>--}}
+{{--                    ©--}}
+{{--                    <script>document.write(new Date().getFullYear())</script> Lexa <span--}}
+{{--                            class="d-none d-sm-inline-block"> - Crafted with <i class="mdi mdi-heart text-danger"></i>--}}
+{{--                            by Themesdesign.</span>--}}
+{{--                </div>--}}
             </div>
         </div>
     </div>

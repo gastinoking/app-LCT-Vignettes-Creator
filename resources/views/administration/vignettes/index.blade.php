@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="page-content">
+    <div class="page-content" id="app">
         <div class="container-fluid">
 
             <div class="row">
@@ -10,94 +10,86 @@
                     <div class="card">
                         <div class="card-body">
                             @include('flash')
-                           <div class="d-flex justify-content-between">
 
-                               <div class="d-flex justify-content-between  align-items-center">
-                                   <h4 class="card-title mr-3">Liste des vignettes</h4>
-                                   <a href="{{route('administration.print-all')}}" class="btn btn-danger"> Imprimer    <i class=" fa fa-print"></i></a>
-                               </div>
 
-                                <div class="">
 
-                                    <a href="{{route('administration.vignettes.create')}}" class="btn btn-primary"> Ajouter une vignettes <i class=" fa fa-save"></i></a>
+
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-bs-toggle="tab" href="#rouge" role="tab">
+                                        <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                        <span class="d-none d-sm-block text-danger btn btn-danger text-white"><strong>Vignettes Rouges</strong></span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#bleu" role="tab">
+                                        <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                        <span class="d-none d-sm-block  text-primary btn btn-primary text-white"><strong>Vignettes Bleus</strong> </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#jaunes" role="tab">
+                                        <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                                        <span class="d-none d-sm-block  text-warning btn btn-warning text-white"> <strong>Vignettes jaunes</strong> </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#vertes" role="tab">
+                                        <span class="d-block d-sm-none"><i class="fas fa-cog"></i></span>
+                                        <span class="d-none d-sm-block  text-success btn btn-success text-white"><strong>Vignettes vertes</strong></span>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#dejaimprime" role="tab">
+                                        <span class="d-block d-sm-none"><i class="fas fa-cog"></i></span>
+                                        <span class="d-none d-sm-block  text-success btn btn-dark text-white"><strong>Vignettes déja imprimés</strong></span>
+                                    </a>
+                                </li>
+
+
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+
+                                <div class="tab-pane active p-3" id="rouge" role="tabpanel">
+                                    <p class="mb-0">
+                                         @include('element.table-vignettes',['listvignettes'=>$vignettesrouge,'tyimp'=>'rouge'])
+                                    </p>
                                 </div>
-                           </div>
+
+                                <div class="tab-pane p-3" id="bleu" role="tabpanel">
+                                    <p class="mb-0">
+                                        @include('element.table-vignettes',['listvignettes'=>$vignettesbleu,'tyimp'=>'bleu'])
+                                    </p>
+                                </div>
+                                <div class="tab-pane p-3" id="jaunes" role="tabpanel">
+                                    <p class="mb-0">
+                                        @include('element.table-vignettes',['listvignettes'=>$vignettesjaunes,'tyimp'=>'jeune'])
+                                    </p>
+                                </div>
+
+                                <div class="tab-pane p-3" id="vertes" role="tabpanel">
+                                    <p class="mb-0">
+                                        @include('element.table-vignettes',['listvignettes'=>$vignettesvertes,'tyimp'=>'verte'])
+                                    </p>
+                                </div>
+
+                                <div class="tab-pane p-3" id="dejaimprime" role="tabpanel">
+                                    <p class="mb-0">
+                                        @include('element.table-vignettes',['listvignettes'=>$vignettesdejaimprime,'tyimp'=>'dejaimprime'])
+                                    </p>
+                                </div>
+
+                            </div>
 
 
 
-                            <table id="datatable" class="table table-bordered dt-responsive nowrap"
-                                   style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Vignettes</th>
-                                    <th>Entreprise</th>
-                                    <th>Immatriculation</th>
-                                    <th>Engin</th>
-                                    <th>Année</th>
-                                    <th>Type de vignettes</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-
-                                <tbody>
-                                @foreach($vignettes as $k=>$v)
-                                    <tr>
-                                        <td>{{$v->id}}</td>
-                                        <td><img src="{{$v->img}}" alt="{{$v->entreprise}}" style="height: 100px;"></td>
-                                        <td>{{$v->entreprise}}</td>
-                                        <td>{{$v->immatriculation}}</td>
-                                        <td>{{$v->typeengin}}</td>
-                                        <td>{{$v->annees}}</td>
-                                        <td>
-                                            @php
-
-                                                $type = "";
-                                                $c = "";
-                                                switch ($v->typeimpression):
-                                                    case 'images/vignettes/vignette-vert.png';
-                                                        $type = 'vert';
-                                                        $c = 'bg-success';
-                                                        break;
-                                                    case 'images/vignettes/vignette-jeune.png';
-                                                        $type = 'jaune';
-                                                         $c = 'bg-warning';
-                                                        break;
-
-                                                     case 'images/vignettes/vignette-bleu.png';
-                                                        $type = 'bleu';
-                                                         $c = 'bg-primary';
-                                                        break;
-                                                     case 'images/vignettes/vignette-rouge.png';
-                                                        $type = 'rouge';
-                                                         $c = 'bg-danger';
-                                                        break;
-
-                                                endswitch;
-                                            @endphp
-
-                                           <span class="badge {{$c}}"> {{$type }}</span>
-                                        </td>
-                                        <td>
-                                            <a href="{{route('administration.vignettes.edit',$v->id)}}" class="btn btn-sm btn-success">
-                                                <i class=" fa fa-pen"></i>
-                                            </a>
-
-                                            <a href="{{route('administration.vignettes.edit',$v->id)}}" class="btn btn-sm btn-danger">
-                                                <i class=" fa fa-trash"></i>
-                                            </a>
-                                            <a href="{{route('administration.print',$v->id)}}" class="btn btn-sm btn-primary">
-                                                <i class=" fa fa-print"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-
-                                </tbody>
-                            </table>
 
                         </div>
-                        {{$vignettes->links('')}}
+
                     </div>
 
                 </div>
@@ -123,11 +115,19 @@
     <link href="{{asset("administration/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css")}}" rel="stylesheet" type="text/css" />
 
 
-    <link href="{{asset("administration/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css")}}" rel="stylesheet"type="text/css" />
+    <link href="{{asset("administration/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css")}}"
+          rel="stylesheet" type="text/css"/>
 
 
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 @endsection
 @section('scripts')
-
-
+    <script src="{{}}"></script>
+    <style>
+        nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+            color: #0049a7;
+            background-color: rgba(113, 148, 113, 0.6);
+            border-color: rgba(34, 158, 34, 0.6) rgba(17, 93, 17, 0.6) #fff;
+        }
+    </style>
 @endsection

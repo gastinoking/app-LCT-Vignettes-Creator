@@ -28,6 +28,7 @@ Route::group(['middleware' =>[ 'auth:web','isadministration'],'prefix' => 'admin
     Route::resource('/vignettes',\App\Http\Controllers\Administration\VignetteContoller::class);
 
 
+    Route::get('/vignettes-importe',[\App\Http\Controllers\Administration\VignetteContoller::class,'vignettesImporte'])->name('vignettes-importe') ;
     Route::get('/print/{id}',[\App\Http\Controllers\Administration\VignetteContoller::class,'print'])->name('print') ;
     Route::get('/print-all',[\App\Http\Controllers\Administration\VignetteContoller::class,'printAll'])->name('print-all') ;
 

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('typeengin') ;
             $table->text('annees') ;
             $table->text('typeimpression') ;
+            $table->integer('etat')->default(0) ;
             $table->timestamps();
         });
     }

@@ -5,12 +5,12 @@
     <div class="p-3">
         <h4 class="text-muted font-size-18 mb-1 text-center">Content de te revoir !
         </h4>
-        <p class="text-muted text-center">Connectez-vous pour continuer vers</p>
+        <p class="text-muted text-center">Connectez-vous pour continuer </p>
 
         <form class="form-horizontal mt-4" method="POST" action="{{ route('login') }}">
             @csrf
             <div class="mb-3">
-                <label for="email" class="">{{ __('Email Address') }}</label>
+                <label for="email" class="">Email</label>
                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                 @error('email')
@@ -36,7 +36,7 @@
                         <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                         <label class="form-check-label" for="remember">
-                            {{ __('Remember Me') }}
+                            Souviens-toi de moi
                         </label>
                     </div>
                 </div>
@@ -45,12 +45,12 @@
                             type="submit">Connexion</button>
                 </div>
             </div>
-            <div class="form-group mb-0 row">
-                <div class="col-12 mt-4">
-                    <a href="#" class="text-muted"><i
-                    class="mdi mdi-lock"></i> Forgot your password?</a>
-                </div>
-            </div>
+{{--            <div class="form-group mb-0 row">--}}
+{{--                <div class="col-12 mt-4">--}}
+{{--                    <a href="#" class="text-muted"><i--}}
+{{--                    class="mdi mdi-lock"></i> Forgot your password?</a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
         </form>
     </div>
 

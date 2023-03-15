@@ -7,6 +7,7 @@
 
                     <div class="card-body">
                         I'm an example component.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, porro, quae. Eligendi est eveniet, fuga inventore ipsa perferendis sint sit ullam veritatis voluptate. Ab deserunt eos laboriosam perferendis quae. Debitis?
                     </div>
                 </div>
             </div>

@@ -16,7 +16,9 @@ import { createApp } from 'vue';
 const app = createApp({});
 
 import ExampleComponent from './components/ExampleComponent.vue';
+import AppVigetteTable from './components/AppVigetteTable.vue';
 app.component('example-component', ExampleComponent);
+app.component('app-vigette-table', AppVigetteTable);
 
 /**
  * The following block of code may be used to automatically register your
