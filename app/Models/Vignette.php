@@ -12,6 +12,14 @@ class Vignette extends Model
     protected $guarded = ['id'];
 
 
+
+    public static $typesVignettes =  [
+        'images/vignettes/vignette-vert.png'=>'Vignette verte',
+        'images/vignettes/vignette-rouge.png'=>'Vignette rouge',
+        'images/vignettes/vignette-jeune.png'=>'Vignette jaune',
+        'images/vignettes/vignette-bleu.png'=>'Vignette bleu',
+    ] ;
+
     public function getImgAttribute()
     {
         return asset($this->typeimpression);

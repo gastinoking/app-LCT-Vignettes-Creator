@@ -6,6 +6,7 @@ use App\Http\Requests\StoreVignetteRequest;
 use App\Http\Requests\UpdateVignetteRequest;
 use App\Models\Vignette;
 use Dompdf\Dompdf;
+use PDF;
 
 class VignetteController extends Controller
 {
@@ -21,9 +22,10 @@ class VignetteController extends Controller
     {
         $dompdf = new Dompdf();
         $dompdf->setPaper('340px', 'auto');
-        $vignettes = Vignette::get() ;
-
-        return \PDF:: loadView('vignettes.print',compact('vignettes')) ->setPaper('340px', 'auto')->stream("vignettes.pdf");
+        $vignettes = Vignette::get()->take(13) ;
+        $customPaper = array(0,0,340.118110236,340.118110236);
+//        '340px', '340px'
+        return PDF::loadView('vignettes.print',compact('vignettes')) ->setPaper($customPaper, 'landscape' )->stream("vignettes.pdf");
 
 
     }

@@ -14,14 +14,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-         \App\Models\User::factory(1)->create([
-             "name"=>'damssan',
-             "email"=>'gastinoking@gmail.com',
-             "password"=>bcrypt('admin123'),
-         ]);
+
 
 
         Artisan::call('migrate:fresh');
+        \App\Models\User::factory(1)->create([
+            "name"=>'damssan',
+            "email"=>'gastinoking@gmail.com',
+            "password"=>bcrypt('admin123'),
+        ]);
 
         $faker = \Faker\Factory::create('fr_FR');
         $typeEngin = ['AUTO','MOTO'];
@@ -31,12 +32,12 @@ class DatabaseSeeder extends Seeder
             'images/vignettes/vignette-rouge.png',
             'images/vignettes/vignette-vert.png',
         ];
-        foreach (range(1, 50) as $index => $item) {
+        foreach (range(1, 150) as $index => $item) {
             Vignette::create([
-                    'entreprise'=>$faker->name,
-                    'immatriculation'=>rand(1100,7000),
+                    'entreprise'=>'LCT',
+                    'immatriculation'=>"TG 220".rand(0,9)."AR",
                     'typeengin'=>$typeEngin[rand(0,1)],
-                    'annees'=>rand(1100,7000),
+                    'annees'=>rand(2002,2022),
                     'typeimpression'=>$typeimpression[rand(0,3)],
             ]);
         }
