@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="page-content">
+    <div class="page-content" id="app">
         <div class="container-fluid">
 
             <div class="row">
@@ -12,36 +12,12 @@
                         <div class="card-body">
                             @include('flash')
                             <div class="d-flex justify-content-between">
-                                <h4 class="card-title">Ajouter une vignette</h4>
+                                <h4 class="card-title">Importer le fichier</h4>
                             </div>
 
-                            <div class="row">
-                                <div class="col-lg-6">
-
-                                    {!! Form::open(['method'=>'POST', 'route' => [ 'home']]) !!}
-                                    <div class="mb-3 row">
-                                        {{Form::label('entreprise','Nom de l\'entreprise ',['class'=>'col-md-4 col-form-label'])}}
-                                        <div class="col-md-8">
-                                            {{Form::text('file',null,['placeholder'=>'LCT', "class"=>'form-control '])}}
-                                            @if($errors->has('file'))
-                                                <span class="text-danger"> {{ $errors->first('file')}}</span>
-                                            @endif
-                                        </div>
+                                <upload-file></upload-file>
 
 
-                                    </div>
-
-
-
-                                    <button type="submit" class="btn btn-primary">Ajouter  la vignette<i class="fa fat-save"></i></button>
-                                    {!! Form::close() !!}
-
-                                </div>
-                                <div class="col-lg-2"></div>
-                                <div class="col-lg-4">
-
-                                </div>
-                            </div>
 
 
                         </div>
@@ -73,7 +49,7 @@
 
     <link href="{{asset("administration/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css")}}" rel="stylesheet"type="text/css" />
 
-
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 @endsection
 @section('scripts')
 

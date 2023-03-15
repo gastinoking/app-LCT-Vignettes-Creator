@@ -13,12 +13,18 @@ import { createApp } from 'vue';
  * to use in your application's views. An example is included for you.
  */
 
+import moshaToast from 'mosha-vue-toastify'
+import 'mosha-vue-toastify/dist/style.css'
+
 const app = createApp({});
 
 import ExampleComponent from './components/ExampleComponent.vue';
 import AppVigetteTable from './components/AppVigetteTable.vue';
+import UploadFile from './components/UploadFile.vue';
+
 app.component('example-component', ExampleComponent);
 app.component('app-vigette-table', AppVigetteTable);
+app.component('upload-file', UploadFile);
 
 /**
  * The following block of code may be used to automatically register your
@@ -37,5 +43,5 @@ app.component('app-vigette-table', AppVigetteTable);
  * an "id" attribute of "app". This element is included with the "auth"
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
-
+app.use(moshaToast);
 app.mount('#app');

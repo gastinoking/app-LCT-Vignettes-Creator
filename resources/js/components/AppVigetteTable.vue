@@ -22,7 +22,7 @@
             <th>Immatriculation</th>
             <th>Engin</th>
             <th>Année</th>
-            <th>Type de vignettes</th>
+
             <th>Action</th>
         </tr>
         </thead>
@@ -41,9 +41,7 @@
             <td>{{v['immatriculation']}}</td>
             <td>{{v['typeengin']}}</td>
             <td>{{v['annees']}}</td>
-            <td>
-                <span class="badge {{v['id']}}">  </span>
-            </td>
+
             <td>
                 <a  :href="`/administration/vignettes/${v['id']}/edit`" class="btn btn-sm btn-success m-1">
                     <i class=" fa fa-pen"></i>

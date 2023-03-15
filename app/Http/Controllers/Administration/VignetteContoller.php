@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Administration;
 
 use App\Http\Controllers\Controller;
+use App\Imports\VignettesImport;
 use App\Models\Vignette;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class VignetteContoller extends Controller
 {
@@ -13,7 +15,7 @@ class VignetteContoller extends Controller
     public function dashboard()
     {
         $total = Vignette::count() ;
-        $vignettes = Vignette::orderBy('id','DESC')->paginate() ;
+        $vignettes = Vignette::orderBy('id','DESC')->where('typeimpression','<>','')->paginate() ;
         return view('administration.dashboard',compact('vignettes','total')) ;
     }
 
@@ -62,7 +64,7 @@ class VignetteContoller extends Controller
         $vignettesbleu= Vignette::where(['typeimpression'=>'images/vignettes/vignette-bleu.png','etat'=>0])->orderBy('id','DESC')->get() ;
         $vignettesjaunes= Vignette::where(['typeimpression'=>'images/vignettes/vignette-jeune.png','etat'=>0])->orderBy('id','DESC')->get() ;
         $vignettesvertes= Vignette::where(['typeimpression'=>'images/vignettes/vignette-vert.png','etat'=>0])->orderBy('id','DESC')->get() ;
-        $vignettesdejaimprime= Vignette::where('etat','=',1)->orderBy('id','DESC')->get() ;
+        $vignettesdejaimprime= Vignette::where('etat','=',1)->where('typeimpression','<>','')->orderBy('id','DESC')->get() ;
         return view('administration.vignettes.index',compact(
             'vignettesrouge',
             'vignettesbleu',
@@ -147,5 +149,17 @@ class VignetteContoller extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+
+    public function uploadcsv( Request $request)
+    {
+        $request->validate([
+            'file' => 'required'
+//            'file' => 'required|mimes:doc,csv,xlsx,xls,docx,ppt,odt,ods,odp'
+        ]) ;
+        $array = Excel::toCollection(new VignettesImport(),$request->file('file'));
+        \Log::debug( $array  );
+        return $array;
     }
 }
