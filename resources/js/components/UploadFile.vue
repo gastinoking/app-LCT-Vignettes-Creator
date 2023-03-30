@@ -16,8 +16,9 @@
         </div>
     </div>
     <div class="row">
+        jj
         <pre>
-            {{vignettesAimporters}}
+            {{listFormated}}
         </pre>
 
         <table class="table" v-if="fileData[0]">
@@ -45,6 +46,7 @@ import {createToast} from "mosha-vue-toastify";
 
 import {computed, ref} from "vue";
 const fileData = ref([])
+const listFormated = ref([])
 const file = ref('')
 const hasError = ref(false)
 const isLoading = ref(false)
@@ -55,6 +57,21 @@ const acceptFiles = [
     'text/xlsx',
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 ]
+
+const onFormatListeVignettes = (data) => {
+    const infos = data[0]?.slice(1)
+     infos.forEach(item=>{
+        const el = {
+            entreprise:item[0],
+            immatriculation:item[1],
+            typeengin:item[2],
+            annees:item[3],
+            typeimpression:item[4],
+        }
+        listFormated.value.push(el)
+    })
+    console.log(listFormated.value)
+}
 const handleFileUploads =async ($event) =>{
     const uploadFile = $event.target.files[0];
     console.log(uploadFile.type)
@@ -76,6 +93,7 @@ const handleFileUploads =async ($event) =>{
             }.bind(this)
         })
         fileData.value = res.data ;
+        onFormatListeVignettes(res.data)
         // await  store.dispatch('citoyens/GET_CITOYENS',res.data)
         // store.commit('citoyens/SET_ISFILELOADING',false)
         // createToast('Le fichier a bien été uploader avec succès ',{type:"success",'position':'bottom-right'})
