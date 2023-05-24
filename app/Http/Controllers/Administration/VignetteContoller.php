@@ -29,7 +29,7 @@ class VignetteContoller extends Controller
 
         $customPaper = array(0, 0,   ((9*90)/3)-15 ,  ((9*90)/3)-15);
 //        '340px', '340px'
-        return \PDF::loadView('administration.vignettes.print',compact('vignettes')) ->setPaper($customPaper, 'landscape' )->stream("vignettes.pdf");
+        return \PDF::loadView('administration.vignettes.print',compact('vignettes')) ->stream("vignettes.pdf");
     }
 
     public function printAll()
@@ -50,10 +50,13 @@ class VignetteContoller extends Controller
         }
 
 
-        $vignettes = Vignette::where(['typeimpression'=>$cond])->where('typeimpression','<>','')->get() ;
+       $vignettes = Vignette::where(['typeimpression'=>$cond])->where('typeimpression','<>','')->get() ;
+
 //        $vignettes->update(['etat'=>1]);
-        $customPaper = array(0, 0,   ((9*90)/3)-15 ,  ((9*90)/3)-15);
-        return \PDF::loadView('administration.vignettes.print',compact('vignettes')) ->setPaper($customPaper, 'portrait' )->stream("vignettes.pdf");
+       // $customPaper = array(0, 0,   ((9*90)/3)-15 ,  ((9*90)/3)-15);
+        $customPaper = array(0, 0,   );
+        return \PDF::loadView('administration.vignettes.print',compact('vignettes'))->stream("vignettes.pdf", ['Attachment' => false]);
+
     }
     /**
      * Display a listing of the resource.
@@ -161,5 +164,68 @@ class VignetteContoller extends Controller
         $array = Excel::toCollection(new VignettesImport(),$request->file('file'));
         \Log::debug( $array  );
         return $array;
+    }
+
+    public function apiPrint( Request $request)
+    {
+      $ids =   $request->ids;
+
+        $type = $request->type ;
+        $cond = '' ;
+        if($type && $type=='rouge'){
+            $cond = 'images/vignettes/vignette-rouge.png' ;
+        }elseif($type && $type=='bleu'){
+            $cond = 'images/vignettes/vignette-bleu.png' ;
+        }elseif($type && $type=='jaunes'){
+            $cond = 'images/vignettes/vignette-jeune.png' ;
+        }elseif($type && $type=='vertes'){
+            $cond = 'images/vignettes/vignette-vert.png' ;
+        }else{
+            $cond = '' ;
+        }
+
+        if (count($ids)>0){
+            $vignettes = Vignette::where(['typeimpression'=>$cond])
+                ->where('typeimpression','<>','')
+                ->whereIn('id',$ids)
+                ->get() ;
+
+            Vignette::whereIn('id', $vignettes->pluck('id'))
+                ->update(['etat' => 1]);
+
+        }else{
+            $vignettes = Vignette::where(['typeimpression'=>$cond])
+                ->where('typeimpression','<>','')
+
+                ->get();
+
+             Vignette::where(['typeimpression'=>$cond])
+                ->where('typeimpression','<>','')
+                ->update(['etat' => 1]);
+        }
+
+        if ($type=='imprimer'){
+            $vignettes = Vignette::where('typeimpression','<>','')
+                ->where(['etat'=>1])
+                ->whereIn('id',$ids)
+                ->get() ;
+
+        }
+
+
+
+        $pdf=    \PDF::loadView('administration.vignettes.print',compact('vignettes')) ;
+
+
+        $filename = 'vignettes_' . time() . '.pdf';
+
+        // Enregistrer le fichier PDF sur le serveur
+        $pdf->save(public_path('vignettes/' . $filename));
+
+        // Récupérer l'URL complète du fichier
+        $fileUrl = asset("vignettes/".$filename);
+
+        // Retourner le lien du fichier PDF
+        return response()->json(['pdf' => $fileUrl,'infos'=>$vignettes]);
     }
 }

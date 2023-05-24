@@ -31,28 +31,31 @@
     }
 </style>
 <body>
-{{--<h1>Titre de la page 1</h1>--}}
-{{--<div>Contenu de la page 1</div>--}}
+@php
+    $total = $vignettes->count();
+@endphp
 
-@foreach($vignettes as $k=>$v)
-   <div class="" style="position: relative;">
+@for($i=0; $i<$total; $i++)
+    @php $v = $vignettes[$i]; @endphp
 
-    <img src="{{public_path().'/'.  $v->typeimpression}}" alt="" style="height: 302px; width: 302px;margin-left: -25px;margin-top: -30px;margin-bottom: -55px">
+    @if($i % 6 == 0)
+        @if($i != 0)
+            <div class="page-break"></div>
+        @endif
+        <div style="position: relative;">
+            @endif
+            <div style="position: absolute; top: {{ floor(($i % 6) / 2) * 350 }}px; left: {{ (($i % 6) % 2) * 380 }}px; height: 300px; width: 300px; background: transparent;">
+                <img src="{{ public_path().'/'.$v['typeimpression'] }}" alt="" style="height: 302px; width: 302px;">
+                <div style="position: absolute; left: 120px; top: 96px; font-weight: bold; font-size: 20px">{{ $v['entreprise'] }}</div>
+                <div style="position: absolute; left: 90px; top: 136px; font-weight: bold; font-size: 20px">{{ $v['immatriculation'] }}</div>
+                <div style="position: absolute; left: 120px; top: 225px; font-weight: bold; font-size: 20px">{{ $v['typeengin'] }}</div>
+                <div style="position: absolute; left: 130px; top: 257px; font-weight: bold; font-size: 20px">{{ $v['annees'] }}</div>
+            </div>
+            @if(($i+1) % 6 == 0 || ($i+1) == $total)
+        </div>
+    @endif
 
-       <div style="position: absolute; left: 100px ;top: 66px;font-weight: bold;font-size: 20px">{{$v->entreprise}}</div>
-       <div style="position: absolute; left: 70px ;top: 106px;font-weight: bold;font-size: 20px">{{$v->immatriculation}}</div>
-       <div style="position: absolute; left: 90px ;top: 195px;font-weight: bold;font-size: 20px">{{$v->typeengin}}</div>
-       <div style="position: absolute; left: 100px  ;top: 226px;font-weight: bold;font-size: 20px">{{$v->annees}}</div>
-   </div>
+@endfor
 
-@endforeach
-
-
-
-<!-- Saut de page -->
-
-
-{{--<h1>Titre de la page 2</h1>--}}
-{{--<div>Contenu de la page 2</div>--}}
 </body>
 </html>

@@ -32,6 +32,7 @@ Route::group(['middleware' =>[ 'auth:web','isadministration'],'prefix' => 'admin
     Route::post('/uploadcsv',[\App\Http\Controllers\Administration\VignetteContoller::class,'uploadcsv'])->name('uploadcsv') ;
     Route::get('/print/{id}',[\App\Http\Controllers\Administration\VignetteContoller::class,'print'])->name('print') ;
     Route::get('/print-all',[\App\Http\Controllers\Administration\VignetteContoller::class,'printAll'])->name('print-all') ;
+    Route::post('api-print',[\App\Http\Controllers\Administration\VignetteContoller::class,'apiPrint'])->name('api-print') ;
 
 
 

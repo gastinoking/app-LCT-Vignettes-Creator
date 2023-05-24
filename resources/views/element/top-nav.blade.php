@@ -28,7 +28,7 @@
                 <div class="collapse navbar-collapse" id="topnav-menu-content">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{route('administration.dashboard')}}">
                                 <i class="ti-dashboard"></i>Tableau de bord
                             </a>
                         </li>

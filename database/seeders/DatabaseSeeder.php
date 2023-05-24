@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             'images/vignettes/vignette-rouge.png',
             'images/vignettes/vignette-vert.png',
         ];
-        foreach (range(1, 150) as $index => $item) {
+        foreach (range(1, 100) as $index => $item) {
             Vignette::create([
                     'entreprise'=>'LCT',
                     'immatriculation'=>"TG 220".rand(0,9)."AR",

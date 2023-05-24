@@ -17,32 +17,32 @@
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" data-bs-toggle="tab" href="#rouge" role="tab">
+                                    <a class="nav-link active" data-bs-toggle="tab" href="#rouge" role="tab"  onclick="window.location.hash = '#rouge';">
                                         <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
                                         <span class="d-none d-sm-block text-danger btn btn-danger text-white"><strong>Vignettes Rouges</strong></span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#bleu" role="tab">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#bleu" role="tab"  onclick="window.location.hash = '#bleu';">
                                         <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
                                         <span class="d-none d-sm-block  text-primary btn btn-primary text-white"><strong>Vignettes Bleus</strong> </span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#jaunes" role="tab">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#jaunes" role="tab"  onclick="window.location.hash = '#jaunes';">
                                         <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
                                         <span class="d-none d-sm-block  text-warning btn btn-warning text-white"> <strong>Vignettes jaunes</strong> </span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#vertes" role="tab">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#vertes" role="tab"  onclick="window.location.hash = '#vertes';">
                                         <span class="d-block d-sm-none"><i class="fas fa-cog"></i></span>
                                         <span class="d-none d-sm-block  text-success btn btn-success text-white"><strong>Vignettes vertes</strong></span>
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#dejaimprime" role="tab">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#dejaimprime" role="tab" onclick="window.location.hash = '#imprimer';">
                                         <span class="d-block d-sm-none"><i class="fas fa-cog"></i></span>
                                         <span class="d-none d-sm-block  text-success btn btn-dark text-white"><strong>Vignettes déja imprimés</strong></span>
                                     </a>
